@@ -1,12 +1,10 @@
 // What is our config?
 let conf = {
-  exchange: {
-    name: 'binance',
-    pair: 'BCC/BTC',
-    creds: {
-      key: '',    // You know what this is?
-      secret: ''  // If you don't please leave!
-    }
+  exchange: 'binance',
+  market: 'XMR/BTC',
+  binance: {
+    apiKey: '', // You know what this is?
+    secret: ''  // If you don't please leave!
   }
 }
 
