@@ -26,6 +26,7 @@
   "dependencies": {
     "ccxt": "^1.10.437",
     "chalk": "^2.3.0",
+    "numbro": "^1.11.1",
     "standard": "^10.0.3",
     "yargs": "^10.0.3"
   }
