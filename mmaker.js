@@ -1,7 +1,4 @@
 #!/usr/bin/env node
-// Dependencies
-const path = require('path')
-
 // Load our arguments
 const argv = require('yargs')
   .default({
