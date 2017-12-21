@@ -5,7 +5,7 @@ const path = require('path')
 // Load our arguments
 const argv = require('yargs')
   .default({
-    conf: './conf'
+    conf: 'conf.js'
   })
   .argv
 
