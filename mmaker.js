@@ -5,3 +5,4 @@ let ccxt = require('ccxt')
 let conf = require('./conf')
 
 console.log(conf)
+console.log(typeof ccxt)
