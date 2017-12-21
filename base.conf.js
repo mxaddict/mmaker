@@ -1,7 +1,7 @@
 // What is our config?
 let conf = {
-  API: {
-    exchange: 'binance',
+  exchange: {
+    name: 'binance',
     pair: 'BCC/BTC',
     creds: {
       key: '',    // You know what this is?
