@@ -10,4 +10,4 @@ let conf = {
   }
 }
 
-module.export = conf
+module.exports = conf

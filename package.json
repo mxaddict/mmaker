@@ -2,8 +2,9 @@
   "name": "mmaker",
   "version": "1.0.0",
   "description": "mmaker is a Market Making trading bot",
-  "main": "main.js",
+  "main": "mmaker.js",
   "scripts": {
+    "start": "node mmaker",
     "test": "standard"
   },
   "repository": {
