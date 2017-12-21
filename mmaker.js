@@ -1,16 +1,19 @@
-// Load dependencies
-const ccxt = require('ccxt')
+#!/usr/bin/env node
+// Dependencies
+const path = require('path')
 
-// Load our project dependencies
-const conf = require('./conf')
-const log = require('./lib/log')
-const Waiter = require('./lib/waiter')
+// Load our arguments
+const argv = require('yargs')
+  .default({
+    conf: './conf'
+  })
+  .argv
 
-// Get some instances
-const waiter = new Waiter()
+// Load our engine with the passed args
+const Engine = require('./lib/engine')
 
-// Start the waiter
-waiter.start()
+// Get an instance
+const engine = new Engine(argv)
 
-log(conf)
-log(typeof ccxt)
+// Start your engines
+engine.start()

@@ -25,6 +25,8 @@
   "homepage": "https://github.com/mxaddict/mmaker#readme",
   "dependencies": {
     "ccxt": "^1.10.435",
-    "standard": "^10.0.3"
+    "chalk": "^2.3.0",
+    "standard": "^10.0.3",
+    "yargs": "^10.0.3"
   }
 }
