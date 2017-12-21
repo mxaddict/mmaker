@@ -1,8 +1,16 @@
 // Load dependencies
-let ccxt = require('ccxt')
+const ccxt = require('ccxt')
 
 // Load our project dependencies
-let conf = require('./conf')
+const conf = require('./conf')
+const log = require('./lib/log')
+const Waiter = require('./lib/waiter')
 
-console.log(conf)
-console.log(typeof ccxt)
+// Get some instances
+const waiter = new Waiter()
+
+// Start the waiter
+waiter.start()
+
+log(conf)
+log(typeof ccxt)
