@@ -1,0 +1,25 @@
+{
+  "name": "mmaker",
+  "version": "1.0.0",
+  "description": "mmaker is a Market Making trading bot",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mxaddict/mmaker.git"
+  },
+  "keywords": [
+    "trading",
+    "bot",
+    "market",
+    "maker"
+  ],
+  "author": "Barry Deeney <mxaddict@codedmaster.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mxaddict/mmaker/issues"
+  },
+  "homepage": "https://github.com/mxaddict/mmaker#readme"
+}
