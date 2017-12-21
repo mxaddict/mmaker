@@ -57,3 +57,5 @@ typings/
 # dotenv environment variables file
 .env
 
+# No configs in repo
+/conf*.js
