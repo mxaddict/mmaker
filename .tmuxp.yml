@@ -1,0 +1,14 @@
+session_name: mmaker
+start_directory: ./ # load session relative to config location (project root).
+windows:
+- window_name: vim
+  panes:
+    - vim
+- window_name: git
+  panes:
+    - shell_command:
+      - git fetch
+      - git status
+- window_name: tests
+  panes:
+    - ls -laF
