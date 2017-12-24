@@ -45,3 +45,9 @@ LTC:  LL6Ntjv6jja1gzyFatK5rKoiWgQJp5anH2
 ```
 
 NOTE: if you wanna donate other alts, let me know, I can arrange for an address `¯\_(ツ)_/¯`
+
+## Supported exchanges?
+
+Right now it will only work with `bitfinex` v1 API
+
+I plan on adding more exchange API support in the future once I have time
