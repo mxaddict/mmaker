@@ -31,3 +31,17 @@ Run with the following command
 ```bash
 ./mmaker.js
 ```
+
+## I made some money with your BOT, how do I donate?
+
+Send your donations here:
+
+```
+BTC:  15cnoKuvP99mXbHGKt6MCEQH5rb8GkyYvA
+BCH:  1JVnEfbcBq1omZ4sD56Fxgn7n8XCFzFfwk
+DASH: Xn6Pe1phnHvNuffa8cChfoGarypVDgjYYv
+ETH:  0xc48dBdB37a5359c69A01671D45B14fe4Fcf69086
+LTC:  LL6Ntjv6jja1gzyFatK5rKoiWgQJp5anH2
+```
+
+NOTE: if you wanna donate other alts, let me know, I can arrange for an address `¯\_(ツ)_/¯`
