@@ -54,8 +54,4 @@ I plan on adding more exchange API support in the future once I have time
 
 ## Known issues?
 
-Sometimes the `BOT` gets confused and stops updating the orders
-
-Just manually `Cancel All` open orders, this will fix this issue
-
-NOTE: I made changes to fix this, so should no longer happen
+TODO: We need to find the issues and report them
