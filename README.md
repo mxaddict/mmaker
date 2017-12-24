@@ -51,3 +51,9 @@ NOTE: if you wanna donate other alts, let me know, I can arrange for an address 
 Right now it will only work with `bitfinex` v1 API
 
 I plan on adding more exchange API support in the future once I have time
+
+## Known issues?
+
+Sometimes the `BOT` gets confused and stops updating the orders
+
+Just manually `Cancel All` open orders, this will fix this issue
