@@ -11,8 +11,13 @@ This project will allow you to run a `Market Maker` *trading bot* to provide liq
 
 ## How to get it running?
 
-Install NodeJS v9.x
+Install NodeJS v9.x ( I suggest NVM )
 
+Install packages
+
+```bash
+npm install
+```
 
 Copy the base conf
 
