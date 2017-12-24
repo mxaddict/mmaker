@@ -12,8 +12,7 @@ let conf = {
   bitfinex: {
     apiKey: '', // You know what this is?
     secret: ''  // If you don't please leave!
-  },
+  }
 }
 
 module.exports = conf
-
