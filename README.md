@@ -8,3 +8,26 @@ The main purpose of this project is for my experimentation only, but since it's 
 ## Ok, but what does it do?
 
 This project will allow you to run a `Market Maker` *trading bot* to provide liquidity to markets where a spread exists
+
+## How to get it running?
+
+Install NodeJS v9.x
+
+
+Copy the base conf
+
+```bash
+cp base.conf.js conf.js
+```
+
+Edit the config with your settings
+
+```bash
+vim conf.js
+```
+
+Run with the following command
+
+```bash
+./mmaker.js
+```
