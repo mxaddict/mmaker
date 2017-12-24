@@ -2,7 +2,7 @@
 let conf = {
   exchange: 'bitfinex',
   market: 'BCH/BTC',
-  minWidthPercent: 0.09,
+  minWidthPercent: 0.15,
   minWidthPercentIncrement: 0.1,
   maxBullets: 5,
   pollInfo: 5000,
