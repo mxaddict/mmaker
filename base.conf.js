@@ -14,7 +14,7 @@ let conf = {
   minWidthPercent: 0.1,
   minWidthPercentIncrement: 0.1,
   orderSize: 0, // ZERO = AUTO
-  positionPlTarget: 2,
+  positionPlTarget: 5,
 
   bitfinex: {
     apiKey: '', // You know what this is?
