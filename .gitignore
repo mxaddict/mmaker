@@ -58,5 +58,5 @@ typings/
 .env
 
 # No configs in repo
-/conf*.js
+/config/*.js
 /balance.json
