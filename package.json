@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/mxaddict/mmaker#readme",
   "dependencies": {
+    "as-table": "^1.0.31",
     "ccxt": "^1.10.437",
     "config": "^1.28.1",
     "jsonfile": "^4.0.0",

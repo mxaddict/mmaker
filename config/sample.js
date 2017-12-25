@@ -9,12 +9,13 @@ let conf = {
   pollReport: 5000,
 
   // Get order settings
-  adjustSpread: false,
+  adjustSpread: true,
   maxBullets: 5,
   minWidthPercent: 0.15,
   minWidthPercentIncrement: 0.1,
   orderSize: 0, // ZERO = AUTO
   positionPlTarget: 5,
+  saveReport: true,
 
   bitfinex: {
     apiKey: '', // You know what this is?
