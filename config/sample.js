@@ -11,7 +11,7 @@ let conf = {
   // Get order settings
   adjustSpread: false,
   maxBullets: 5,
-  minWidthPercent: 0.1,
+  minWidthPercent: 0.15,
   minWidthPercentIncrement: 0.1,
   orderSize: 0, // ZERO = AUTO
   positionPlTarget: 5,
