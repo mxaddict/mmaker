@@ -22,13 +22,13 @@ npm install
 Copy the base conf
 
 ```bash
-cp base.conf.js conf.js
+cp config/sample.js config/default.js
 ```
 
 Edit the config with your settings
 
 ```bash
-vim conf.js
+vim config/default.js
 ```
 
 Run with the following command
