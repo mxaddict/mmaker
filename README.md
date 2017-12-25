@@ -1,4 +1,6 @@
 # MMAKER
+
+[![Join the chat at https://gitter.im/MMakerBot/Lobby](https://badges.gitter.im/MMakerBot/Lobby.svg)](https://gitter.im/MMakerBot/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 <a href="https://travis-ci.org/mxaddict/mmaker"><img src="https://travis-ci.org/mxaddict/mmaker.svg?branch=master"></a>
 
 ## What is this even for?
