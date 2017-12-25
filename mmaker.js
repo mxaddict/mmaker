@@ -2,8 +2,6 @@
 // Load our arguments
 const argv = require('yargs')
   .default({
-    exchange: false,
-    market: false,
     reset_profit: false
   })
   .argv
