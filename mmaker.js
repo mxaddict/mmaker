@@ -2,7 +2,6 @@
 // Load our arguments
 const argv = require('yargs')
   .default({
-    conf: 'conf.js',
     exchange: false,
     market: false,
     reset_profit: false
