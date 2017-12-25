@@ -14,6 +14,7 @@ let conf = {
   minWidthPercent: 0.15,
   minWidthPercentIncrement: 0.1,
   orderSize: 0, // ZERO = AUTO
+  orderSizeMultiplier: 0.08,
   positionPlTarget: 1,
   saveReport: true,
 
