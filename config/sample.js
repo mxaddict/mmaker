@@ -11,10 +11,10 @@ let conf = {
   // Get order settings
   adjustSpread: true,
   maxBullets: 5,
-  minWidthPercent: 0.15,
+  minWidthPercent: 0.18,
   minWidthPercentIncrement: 0.1,
   orderSize: 0, // ZERO = AUTO
-  orderSizeMultiplier: 0.08,
+  orderSizeMultiplier: 0.05,
   positionPlTarget: 5,
   saveReport: true,
 
