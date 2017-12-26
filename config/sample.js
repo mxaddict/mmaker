@@ -15,7 +15,7 @@ let conf = {
   minWidthPercentIncrement: 0.1,
   orderSize: 0, // ZERO = AUTO
   orderSizeMultiplier: 0.08,
-  positionPlTarget: 1,
+  positionPlTarget: 5,
   saveReport: true,
 
   bitfinex: {
