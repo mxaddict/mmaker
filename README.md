@@ -1,7 +1,7 @@
 # MMAKER
 
-[![Join the chat at https://gitter.im/MMakerBot/Lobby](https://badges.gitter.im/MMakerBot/Lobby.svg)](https://gitter.im/MMakerBot/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-[![Check Build status at https://travis-ci.org/mxaddict/mmaker](https://travis-ci.org/mxaddict/mmaker.svg?branch=master)](https://travis-ci.org/mxaddict/mmaker)
+<a target="_blank" href="https://gitter.im/MMakerBot/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge"><img alt="Join the chat at https://gitter.im/MMakerBot/Lobby" src="https://badges.gitter.im/MMakerBot/Lobby.svg"></a>
+<a target="_blank" href="https://travis-ci.org/mxaddict/mmaker"><img alt="Check Build status at https://travis-ci.org/mxaddict/mmaker" src="https://travis-ci.org/mxaddict/mmaker.svg?branch=master"></a>
 
 ## What is this even for?
 
