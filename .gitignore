@@ -59,4 +59,4 @@ typings/
 
 # No configs in repo
 /config/*.js
-/balance.json
+/balance*.json
