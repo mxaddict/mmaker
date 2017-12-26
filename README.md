@@ -39,6 +39,10 @@ Run with the following command
 ./mmaker.js
 ```
 
+Once Running, the output should look like this
+
+![Sample BOT run](https://raw.githubusercontent.com/mxaddict/mmaker/master/img/output.png)
+
 ## I made some money with your BOT, how do I donate?
 
 Send your donations here:
