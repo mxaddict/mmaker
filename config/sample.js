@@ -15,9 +15,9 @@ let conf = {
   orderSize: 0, // ZERO = AUTO
   orderSizeMultiplier: 0.05,
   orderCountBuy: 5,
-  orderCountBuyMin: 2,
+  orderCountBuyMin: 3,
   orderCountSell: 5,
-  orderCountSellMin: 2,
+  orderCountSellMin: 3,
   positionPlTarget: 5,
   saveReport: true,
 
