@@ -49,6 +49,12 @@ Right now it will only work with `bitfinex` v1 API
 
 I plan on adding more exchange API support in the future once I have time
 
+# I want to monitor the bot while i'm mobile, how?
+
+Use this: [MMonitor-Mobile](https://github.com/mxaddict/mmonitor-mobile)
+
+NOTE: You need to set `saveReport` to `true` in your MMaker config, and host a server with web root as `/path/to/mmaker/public`
+
 ## Known issues?
 
 TODO: We need to find the issues and report them
