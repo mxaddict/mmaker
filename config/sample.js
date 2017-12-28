@@ -17,8 +17,8 @@ let conf = {
   orderCountSell: 5,
   orderCountSellMin: 5,
   orderSize: 0, // ZERO = AUTO
-  orderSizeMultiplier: 0.08,
-  positionTargets: [ 0.8, 1 ],
+  orderSizeMultiplier: 0.1,
+  positionTargets: [ 1, 1.5 ],
   saveReport: true,
 
   bitfinex: {
