@@ -19,6 +19,7 @@ let conf = {
   orderSize: 0, // ZERO = AUTO
   orderSizeMultiplier: 0.1,
   positionTarget: 0.5,
+  positionTargetMarket: true,
   saveReport: true,
 
   bitfinex: {
