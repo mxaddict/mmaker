@@ -10,7 +10,7 @@ let conf = {
 
   // Get order settings
   adjustSpread: true,
-  minWidthPercent: 0.15,
+  minWidthPercent: 0.3,
   minWidthPercentIncrement: 0.1,
   orderCountBuy: 5,
   orderCountBuyMin: 5,
@@ -18,7 +18,7 @@ let conf = {
   orderCountSellMin: 5,
   orderSize: 0, // ZERO = AUTO
   orderSizeMultiplier: 0.1,
-  positionTargets: [ 1, 1.5 ],
+  positionTargets: [ 2 ],
   saveReport: true,
 
   bitfinex: {
