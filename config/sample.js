@@ -4,13 +4,13 @@ let conf = {
   market: 'BCH/BTC',
 
   // Get the poll settings
-  pollInfo: 5000,
-  pollOrders: 5000,
-  pollReport: 10000,
+  pollInfo: 8000,
+  pollOrders: 8000,
+  pollReport: 5000,
 
   // Get order settings
   adjustSpread: true,
-  minWidthPercent: 0.25,
+  minWidthPercent: 0.3,
   minWidthPercentIncrement: 0.1,
   orderCountBuy: 5,
   orderCountBuyMin: 5,
