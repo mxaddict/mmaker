@@ -10,8 +10,8 @@ let conf = {
 
   // Get order settings
   adjustSpread: true,
-  minWidthPercent: 0.3,
-  minWidthPercentIncrement: 0.15,
+  minWidthPercent: 0.25,
+  minWidthPercentIncrement: 0.1,
   orderCountBuy: 5,
   orderCountBuyMin: 5,
   orderCountSell: 5,
