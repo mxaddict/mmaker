@@ -6,7 +6,7 @@ let conf = {
   // Get the poll settings
   pollInfo: 5000,
   pollOrders: 5000,
-  pollReport: 5000,
+  pollReport: 10000,
 
   // Get order settings
   adjustSpread: true,
