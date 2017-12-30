@@ -1,7 +1,7 @@
 // What is our config?
 let conf = {
   exchange: 'bitfinex',
-  market: 'BCH/BTC',
+  market: 'XRP/BTC',
 
   // Get the poll settings
   pollInfo: 8000,
@@ -10,16 +10,16 @@ let conf = {
 
   // Get order settings
   adjustSpread: true,
-  minWidthPercent: 0.5,
-  minWidthPercentIncrement: 0.2,
+  minWidthPercent: 0.8,
+  minWidthPercentIncrement: 0.3,
   orderCountBuy: 5,
-  orderCountBuyMin: 3,
+  orderCountBuyMin: 1,
   orderCountSell: 5,
-  orderCountSellMin: 3,
+  orderCountSellMin: 1,
   orderSize: 0, // ZERO = AUTO
   orderSizeMultiplier: 0.1,
   positionTarget: 1,
-  positionTargetMarket: false,
+  positionTargetMarket: true,
   saveReport: true,
 
   bitfinex: {
