@@ -7,7 +7,7 @@ const argv = require('yargs')
   .argv
 
 // Load our engine with the passed args
-const Engine = require('./lib/engine')
+const Engine = require('./src/engine')
 
 // Get an instance
 const engine = new Engine(argv)
