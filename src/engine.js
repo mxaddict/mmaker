@@ -68,8 +68,6 @@ module.exports = class Engine {
     this.ordersReset = false
     this.ordersBuy = []
     this.ordersSell = []
-    this.positions = []
-    this.position = false
 
     this.profitOrder = false
 
@@ -80,7 +78,6 @@ module.exports = class Engine {
     this.assetBalanceStart = false
     this.currencyBalance = false
     this.currencyBalanceConsolidated = false
-    this.currencyBalanceConsolidatedDiff = false
     this.currencyBalanceConsolidatedStart = false
     this.currencyBalanceStart = false
   }
@@ -126,7 +123,6 @@ module.exports = class Engine {
 
   async tickInfo () {
     try {
-      let pl = (this.position ? this.position.pl : 0)
 
       // Load the price info
       let orderbook = await this.exchange.fetchOrderBook(this.market)
@@ -164,13 +160,18 @@ module.exports = class Engine {
         if (
           this.argv.reset_profit ||
           !balanceCache[this.asset] ||
-          !balanceCache[this.asset].start ||
           !balanceCache[this.asset].total ||
           !balanceCache[this.currency] ||
-          !balanceCache[this.currency].start ||
           !balanceCache[this.currency].total
         ) {
-          balanceCache = balance
+          balanceCache = {}
+          balanceCache[this.asset] = {
+            total: this.assetBalanceStart
+          }
+          balanceCache[this.currency] = {
+            total: this.currencyBalanceStart,
+            consolidated: this.currencyBalanceConsolidatedStart
+          }
 
           try {
             // Save these for later
@@ -184,9 +185,8 @@ module.exports = class Engine {
 
           // Load from conf
           this.assetBalanceStart = balanceCache[this.asset] ? balanceCache[this.asset].total : 0
-          this.assetBalanceConsolidatedStart = balanceCache[this.asset] ? balanceCache[this.asset].consolidated : 0
-          this.assetBalanceStart = balanceCache[this.asset] ? balanceCache[this.asset].total : 0
-          this.assetBalanceConsolidatedStart = balanceCache[this.asset] ? balanceCache[this.asset].consolidated : 0
+          this.currencyBalanceStart = balanceCache[this.currency] ? balanceCache[this.currency].total : 0
+          this.currencyBalanceConsolidatedStart = balanceCache[this.currency] ? balanceCache[this.currency].consolidated : 0
         }
       }
 
@@ -195,10 +195,8 @@ module.exports = class Engine {
       this.currencyBalance = balance[this.currency] ? balance[this.currency].total : 0
 
       // Calculate consolidated balance
-      this.currencyBalanceConsolidated = this.currencyBalance + pl + (this.assetBalance * this.bid)
-      this.currencyBalanceConsolidatedBase = this.currencyBalance + (this.assetBalance * this.bid)
+      this.currencyBalanceConsolidated = this.currencyBalance + (this.assetBalance * this.bid)
       this.currencyBalanceConsolidatedDiff = (this.currencyBalanceConsolidated - this.currencyBalanceConsolidatedStart) / this.currencyBalanceConsolidatedStart
-      this.currencyBalanceConsolidatedBaseDiff = (this.currencyBalanceConsolidatedBase - this.currencyBalanceConsolidatedStart) / this.currencyBalanceConsolidatedStart
     } catch (e) {
       /* handle error */
       log.bright.red.error(e)
@@ -217,11 +215,9 @@ module.exports = class Engine {
         let price = 0
         let newOrdersBuy = []
         let newOrdersSell = []
-        let orderCountModBuy = 0
-        let orderCountModSell = 0
 
         // Load current orders
-        this.orders = await this.exchange.fetchOrders(this.market)
+        this.orders = await this.exchange.fetchOpenOrders(this.market)
         this.ordersBuy = this.orders.filter((order) => {
           return order.side === 'buy'
         })
@@ -229,86 +225,15 @@ module.exports = class Engine {
           return order.side === 'sell'
         })
 
-        // Load our positions and get our own position
-        this.positions = await this.exchange.privatePostPositions()
-        this.position = this.positions.filter((position) => {
-          return position.symbol === this.market.replace('/', '').toLowerCase()
-        })
-
-        if (!this.position.length) {
-          this.position = false
-        } else {
-          // Save the current market position
-          this.position = this.position[0]
-        }
-
-        if (this.position) {
-          // Convert the floats into floats
-          this.position.amount = parseFloat(this.position.amount)
-          this.position.base = parseFloat(this.position.base)
-          this.position.pl = parseFloat(this.position.pl)
-
-          // are we long or short?
-          this.position.long = this.position.amount > 0
-
-          // Calculate the position %
-          this.position.plp = this.position.pl / this.currencyBalanceConsolidatedBase
-
-          let amount = this.position.long ? this.position.amount : this.position.amount * -1
-
-          // Check if amount is feasable
-          if (amount < this.marketInfo.limits.amount.min) {
-            // Reset to default
-            amount = this.marketInfo.limits.amount.min
-          }
-
-          this.profitOrder = false
-
-          if (this.position.plp >= this.positionTarget / 100) {
-            // Calculate the price
-            price = (this.position.long ? this.ask : this.bid)
-
-            this.profitOrder = {
-              symbol: this.market.replace('/', ''),
-              amount: amount.toString(),
-              price: price.toString(),
-              exchange: 'bitfinex',
-              side: (this.position.long ? 'sell' : 'buy'),
-              type: (this.greedy ? 'market' : 'limit'),
-              is_postonly: true
-            }
-
-            // Check if we need a market order
-            if (this.greedy) {
-              await this.exchange.privatePostOrderNew(this.profitOrder)
-              this.profitOrder = false
-              this.ordersReset = true
-            } else {
-              if (this.position.long) {
-                // Add the order
-                newOrdersSell.push(this.profitOrder)
-              } else {
-                // Add the order
-                newOrdersBuy.push(this.profitOrder)
-              }
-            }
-          }
-        }
-
-        if (this.profitOrder) {
-          orderCountModBuy = this.position.long ? 0 : 1
-          orderCountModSell = this.position.long ? 1 : 0
-        }
-
         // Check if we need to update orders
         if (
           this.ordersReset ||
           (
             this.orders.length &&
             (
-              this.orders.length > (this.orderCountBuy + this.orderCountSell + orderCountModBuy + orderCountModSell) ||
-              this.ordersBuy.length < this.orderCountBuyMin + orderCountModBuy ||
-              this.ordersSell.length < this.orderCountSellMin + orderCountModSell
+              this.orders.length > (this.orderCountBuy + this.orderCountSell) ||
+              this.ordersBuy.length < this.orderCountBuyMin ||
+              this.ordersSell.length < this.orderCountSellMin
             ) // Do we have a balanced order set?
           )
         ) {
@@ -318,13 +243,14 @@ module.exports = class Engine {
               return order.id
             })
 
-            for (let i = 0, len = orderIds.length; i < len; i += this.chunks) {
-              await this.exchange.privatePostOrderCancelMulti({ order_ids: orderIds.slice(i, i + this.chunks) })
+            for (let i = 0, len = orderIds.length; i < len; i++) {
+              await this.exchange.cancelOrder(orderIds[i], this.market)
             }
 
             this.ordersReset = false
           } catch (e) {
             /* handle error */
+            log.bright.red.error(e)
           }
         }
 
@@ -335,21 +261,15 @@ module.exports = class Engine {
             price = this.bid
           }
 
-          // Check for a position
-          if (this.greedy && this.position && !this.position.long && price > this.position.base) {
-            price = this.position.base
-          }
-
           for (let i = 0, len = this.orderCountBuy; i < len; i++) {
             price -= price * this.minWidthPercentIncrement
 
             this.adjustOrderSize(price)
 
             newOrdersBuy.push({
-              symbol: this.market.replace('/', ''),
+              symbol: this.market,
               amount: this.orderSize.toString(),
               price: price.toString(),
-              exchange: 'bitfinex',
               side: 'buy',
               type: 'limit',
               is_postonly: true
@@ -362,21 +282,15 @@ module.exports = class Engine {
             price = this.ask
           }
 
-          // Check for a position
-          if (this.greedy && this.position && this.position.long && price < this.position.base) {
-            price = this.position.base
-          }
-
           for (let i = 0, len = this.orderCountSell; i < len; i++) {
             price += price * this.minWidthPercentIncrement
 
             this.adjustOrderSize(price)
 
             newOrdersSell.push({
-              symbol: this.market.replace('/', ''),
+              symbol: this.market,
               amount: this.orderSize.toString(),
               price: price.toString(),
-              exchange: 'bitfinex',
               side: 'sell',
               type: 'limit',
               is_postonly: true
@@ -385,17 +299,18 @@ module.exports = class Engine {
 
           try {
             let orders = []
-            if (this.position && this.position.long) {
-              orders = newOrdersSell.concat(newOrdersBuy)
-            } else {
+            if (this.currencyBalance / this.currencyBalanceConsolidated > 0.5) {
               orders = newOrdersBuy.concat(newOrdersSell)
+            } else {
+              orders = newOrdersSell.concat(newOrdersBuy)
             }
 
-            for (let i = 0, len = orders.length; i < len; i += this.chunks) {
-              await this.exchange.privatePostOrderNewMulti({ orders: orders.slice(i, i + this.chunks) })
+            for (let i = 0, len = orders.length; i < len; i ++) {
+              await this.exchange.createOrder(orders[i].symbol, orders[i].type, orders[i].side, orders[i].amount, orders[i].price)
             }
           } catch (e) {
             /* handle error */
+            log.bright.red.error(e)
           }
 
           // Save the used fair
@@ -415,10 +330,6 @@ module.exports = class Engine {
   async tickReport () {
     try {
       if (this.started) {
-        let plp = this.position ? this.position.plp : 0
-        let pamount = this.position ? this.position.amount : 0
-        let ptype = this.position ? (this.position.long ? 'long'.green : 'short'.red) : 'none'.darkGray
-
         // Check if we want to save the report
         if (this.saveReport) {
           // Where do we save the report?
@@ -428,8 +339,7 @@ module.exports = class Engine {
             let report = {
               balance: {
                 start: this.currencyBalanceConsolidatedStart,
-                consolidated: this.currencyBalanceConsolidated,
-                current: this.currencyBalanceConsolidatedBase
+                current: this.currencyBalanceConsolidated,
               },
 
               asset: this.asset,
@@ -440,7 +350,6 @@ module.exports = class Engine {
               fair: this.fair,
               spread: this.spread,
 
-              position: this.position,
               orders: {
                 buy: this.orders ? this.ordersBuy.length : 0,
                 sell: this.orders ? this.ordersSell.length : 0
@@ -464,25 +373,16 @@ module.exports = class Engine {
           ].join('/')].join(' '),
 
           // Balance
-          'balance start/current/+pl': [ this.currency, [
+          'balance start/current': [ this.currency, [
             fk(this.currencyBalanceConsolidatedStart).cyan,
-            fk(this.currencyBalanceConsolidatedBase).magenta,
-            fk(this.currencyBalanceConsolidated).yellow
+            fk(this.currencyBalanceConsolidated).magenta,
           ].join('/')].join(' '),
 
           // Profit Loss
-          'profit/loss value/%/%consolidated': [ this.currency, [
-            fkl(this.currencyBalanceConsolidatedBase - this.currencyBalanceConsolidatedStart),
-            fp(this.currencyBalanceConsolidatedBaseDiff),
+          'profit/loss value/%': [ this.currency, [
+            fkl(this.currencyBalanceConsolidated - this.currencyBalanceConsolidatedStart),
             fp(this.currencyBalanceConsolidatedDiff)
           ].join('/')].join(' '),
-
-          // Position stats
-          'position pl%/type/amount': [
-            fp(plp),
-            ptype,
-            `${this.asset} ${fkl(pamount)}`.yellow
-          ].join('/'),
 
           // Order stats
           'orders size/buy/sell': [
@@ -501,8 +401,10 @@ module.exports = class Engine {
   }
 
   adjustOrderSize (price) {
-    // Calculate the orderSize
-    this.orderSize = this.currencyBalanceConsolidatedBase * this.orderSizeMultiplier / this.fair
+    if (this.orderSize == 0) {
+      // Calculate the orderSize
+      this.orderSize = this.currencyBalanceConsolidated * this.orderSizeMultiplier / this.fair
+    }
 
     // Check order size
     if (this.orderSize < this.marketInfo.limits.amount.min) {
@@ -538,7 +440,6 @@ module.exports = class Engine {
       this.orderCountSellMin = config.get('orderCountSellMin')
       this.orderSize = config.get('orderSize')
       this.orderSizeMultiplier = config.get('orderSizeMultiplier')
-      this.positionTarget = config.get('positionTarget')
 
       // Do we save the report?
       this.saveReport = config.get('saveReport') || true
