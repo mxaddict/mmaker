@@ -154,6 +154,7 @@ module.exports = class Engine {
         // Save the values
         this.assetBalanceStart = balance[this.asset] ? balance[this.asset].total : 0
         this.currencyBalanceStart = balance[this.currency] ? balance[this.currency].total : 0
+        this.assetBalanceConsolidatedStart = this.assetBalanceStart + this.currencyBalanceStart / this.ask
         this.currencyBalanceConsolidatedStart = this.currencyBalanceStart + this.assetBalanceStart * this.bid
 
         // Check if we need a profit reset?
@@ -161,12 +162,15 @@ module.exports = class Engine {
           this.argv.reset_profit ||
           !balanceCache[this.asset] ||
           !balanceCache[this.asset].total ||
+          !balanceCache[this.asset].consolidated ||
           !balanceCache[this.currency] ||
-          !balanceCache[this.currency].total
+          !balanceCache[this.currency].total ||
+          !balanceCache[this.currency].consolidated
         ) {
           balanceCache = {}
           balanceCache[this.asset] = {
-            total: this.assetBalanceStart
+            total: this.assetBalanceStart,
+            consolidated: this.assetBalanceConsolidatedStart
           }
           balanceCache[this.currency] = {
             total: this.currencyBalanceStart,
@@ -186,6 +190,7 @@ module.exports = class Engine {
           // Load from conf
           this.assetBalanceStart = balanceCache[this.asset] ? balanceCache[this.asset].total : 0
           this.currencyBalanceStart = balanceCache[this.currency] ? balanceCache[this.currency].total : 0
+          this.assetBalanceConsolidatedStart = balanceCache[this.asset] ? balanceCache[this.asset].consolidated : 0
           this.currencyBalanceConsolidatedStart = balanceCache[this.currency] ? balanceCache[this.currency].consolidated : 0
         }
       }
@@ -195,6 +200,8 @@ module.exports = class Engine {
       this.currencyBalance = balance[this.currency] ? balance[this.currency].total : 0
 
       // Calculate consolidated balance
+      this.assetBalanceConsolidated = this.assetBalance + (this.currencyBalance / this.ask)
+      this.assetBalanceConsolidatedDiff = (this.assetBalanceConsolidated - this.assetBalanceConsolidatedStart) / this.assetBalanceConsolidatedStart
       this.currencyBalanceConsolidated = this.currencyBalance + (this.assetBalance * this.bid)
       this.currencyBalanceConsolidatedDiff = (this.currencyBalanceConsolidated - this.currencyBalanceConsolidatedStart) / this.currencyBalanceConsolidatedStart
     } catch (e) {
@@ -336,11 +343,19 @@ module.exports = class Engine {
           let reportFile = 'public/report.json'
 
           try {
+            let balance = {}
+            balance[this.asset] = {
+              total: this.assetBalanceConsolidatedStart,
+              consolidated: this.assetBalanceConsolidatedStart
+            }
+
+            balance[this.currency] = {
+              total: this.currencyBalanceConsolidatedStart,
+              consolidated: this.currencyBalanceConsolidatedStart
+            }
+
             let report = {
-              balance: {
-                start: this.currencyBalanceConsolidatedStart,
-                current: this.currencyBalanceConsolidated,
-              },
+              balance: balance,
 
               asset: this.asset,
               currency: this.currency,
@@ -372,14 +387,26 @@ module.exports = class Engine {
             fp(this.spreadPercent)
           ].join('/')].join(' '),
 
-          // Balance
-          'balance start/current': [ this.currency, [
+          // asset balance
+          'asset balance start/current': [ this.asset, [
+            fk(this.assetBalanceConsolidatedStart).cyan,
+            fk(this.assetBalanceConsolidated).magenta,
+          ].join('/')].join(' '),
+
+          // currency balance
+          'currency start/current': [ this.currency, [
             fk(this.currencyBalanceConsolidatedStart).cyan,
             fk(this.currencyBalanceConsolidated).magenta,
           ].join('/')].join(' '),
 
-          // Profit Loss
-          'profit/loss value/%': [ this.currency, [
+          // asset profit/loss
+          'asset profit/loss value/%': [ this.asset, [
+            fkl(this.assetBalanceConsolidated - this.assetBalanceConsolidatedStart),
+            fp(this.assetBalanceConsolidatedDiff)
+          ].join('/')].join(' '),
+
+          // currency profit/loss
+          'currency profit/loss value/%': [ this.currency, [
             fkl(this.currencyBalanceConsolidated - this.currencyBalanceConsolidatedStart),
             fp(this.currencyBalanceConsolidatedDiff)
           ].join('/')].join(' '),
