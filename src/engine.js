@@ -137,7 +137,7 @@ module.exports = class Engine {
       this.spreadPercent = this.spread / this.bid
 
       // Load the balances for market
-      let balance = await this.exchange.fetchBalance({ type: 'trading' })
+      let balance = await this.exchange.fetchBalance()
 
       // Check if we have the start balance
       if (!this.started && this.bid) {
@@ -161,11 +161,16 @@ module.exports = class Engine {
         this.currencyBalanceConsolidatedStart = this.currencyBalanceStart + this.assetBalanceStart * this.bid
 
         // Check if we need a profit reset?
-        if (this.argv.reset_profit || !balanceCache.total || !balanceCache.consolidated) {
-          balanceCache = {
-            total: this.currencyBalanceStart,
-            consolidated: this.currencyBalanceConsolidatedStart
-          }
+        if (
+          this.argv.reset_profit ||
+          !balanceCache[this.asset] ||
+          !balanceCache[this.asset].start ||
+          !balanceCache[this.asset].total ||
+          !balanceCache[this.currency] ||
+          !balanceCache[this.currency].start ||
+          !balanceCache[this.currency].total
+        ) {
+          balanceCache = balance
 
           try {
             // Save these for later
@@ -178,9 +183,10 @@ module.exports = class Engine {
           log.cyan(`Loaded balance from "${balanceFile}"`)
 
           // Load from conf
-          this.assetBalanceStart = 0
-          this.currencyBalanceStart = balanceCache ? balanceCache.total : 0
-          this.currencyBalanceConsolidatedStart = balanceCache ? balanceCache.consolidated : 0
+          this.assetBalanceStart = balanceCache[this.asset] ? balanceCache[this.asset].total : 0
+          this.assetBalanceConsolidatedStart = balanceCache[this.asset] ? balanceCache[this.asset].consolidated : 0
+          this.assetBalanceStart = balanceCache[this.asset] ? balanceCache[this.asset].total : 0
+          this.assetBalanceConsolidatedStart = balanceCache[this.asset] ? balanceCache[this.asset].consolidated : 0
         }
       }
 
@@ -215,7 +221,7 @@ module.exports = class Engine {
         let orderCountModSell = 0
 
         // Load current orders
-        this.orders = await this.exchange.privatePostOrders(this.market)
+        this.orders = await this.exchange.fetchOrders(this.market)
         this.ordersBuy = this.orders.filter((order) => {
           return order.side === 'buy'
         })
