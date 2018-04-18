@@ -123,7 +123,6 @@ module.exports = class Engine {
 
   async tickInfo () {
     try {
-
       // Load the price info
       let orderbook = await this.exchange.fetchOrderBook(this.market)
       this.bid = orderbook.bids.length ? orderbook.bids[0][0] : false
@@ -312,7 +311,7 @@ module.exports = class Engine {
               orders = newOrdersSell.concat(newOrdersBuy)
             }
 
-            for (let i = 0, len = orders.length; i < len; i ++) {
+            for (let i = 0, len = orders.length; i < len; i++) {
               await this.exchange.createOrder(orders[i].symbol, orders[i].type, orders[i].side, orders[i].amount, orders[i].price)
             }
           } catch (e) {
@@ -390,13 +389,13 @@ module.exports = class Engine {
           // asset balance
           'asset balance start/current': [ this.asset, [
             fk(this.assetBalanceConsolidatedStart).cyan,
-            fk(this.assetBalanceConsolidated).magenta,
+            fk(this.assetBalanceConsolidated).magenta
           ].join('/')].join(' '),
 
           // currency balance
           'currency start/current': [ this.currency, [
             fk(this.currencyBalanceConsolidatedStart).cyan,
-            fk(this.currencyBalanceConsolidated).magenta,
+            fk(this.currencyBalanceConsolidated).magenta
           ].join('/')].join(' '),
 
           // asset profit/loss
@@ -428,7 +427,7 @@ module.exports = class Engine {
   }
 
   adjustOrderSize (price) {
-    if (this.orderSize == 0) {
+    if (this.orderSize === 0) {
       // Calculate the orderSize
       this.orderSize = this.currencyBalanceConsolidated * this.orderSizeMultiplier / this.fair
     }
