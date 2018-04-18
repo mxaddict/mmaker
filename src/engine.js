@@ -8,9 +8,6 @@ const log = olog.configure({ time: { print: x => (`${x.toLocaleDateString('en-us
 const numbro = require('numbro')
 const table = require('as-table').configure({ title: x => x.darkGray, delimiter: ' | '.dim.cyan, dash: '-'.bright.cyan })
 
-// src
-const Exchange = require('./exchange')
-
 // Make some shorthands for numbro
 function fk (value) {
   return numbro(value).format('0,0[.]00000000')

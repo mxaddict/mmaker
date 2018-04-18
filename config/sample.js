@@ -22,7 +22,7 @@ let conf = {
   positionTarget: 1,
   saveReport: true,
 
-  bitfinex: {
+  binance: {
     apiKey: '', // You know what this is?
     secret: ''  // If you don't please leave!
   }
