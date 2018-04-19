@@ -345,12 +345,14 @@ module.exports = class Engine {
             let balance = {}
             balance[this.asset] = {
               total: this.assetBalanceConsolidatedStart,
-              consolidated: this.assetBalanceConsolidatedStart
+              consolidated: this.assetBalanceConsolidated,
+              profit: this.assetBalanceConsolidatedStart - this.assetBalanceConsolidated
             }
 
             balance[this.currency] = {
               total: this.currencyBalanceConsolidatedStart,
-              consolidated: this.currencyBalanceConsolidatedStart
+              consolidated: this.currencyBalanceConsolidated,
+              profit: this.currencyBalanceConsolidatedStart - this.currencyBalanceConsolidated
             }
 
             let report = {
