@@ -467,7 +467,7 @@ module.exports = class Engine {
       this.orderCountSell = config.get('orderCountSell')
       this.orderCountSellMin = config.get('orderCountSellMin')
       this.orderSize = config.get('orderSize')
-      this.orderSizeMultiplier = config.get('orderSizeMultiplier')
+      this.orderSizeMultiplier = config.get('orderSizeMultiplier') / 100
 
       // Do we save the report?
       this.saveReport = config.get('saveReport') || true
