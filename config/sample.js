@@ -1,7 +1,7 @@
 // What is our config?
 let conf = {
-  exchange: 'bitfinex',
-  market: 'BCH/BTC',
+  exchange: 'binance',
+  market: 'NAV/BTC',
 
   // Get the poll settings
   pollInfo: 8000,
