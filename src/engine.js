@@ -113,9 +113,9 @@ module.exports = class Engine {
     log.cyan(`Using Market "${this.market}"`)
     this.marketInfo = this.marketsInfo[this.market]
 
-    this.tickInfo()       // Update the market prices and balance
-    this.tickOrders()     // Update our orders
-    this.tickReport()     // Update the report
+    this.tickInfo() // Update the market prices and balance
+    this.tickOrders() // Update our orders
+    this.tickReport() // Update the report
 
     // Give the go ahead
     return true
@@ -406,9 +406,8 @@ module.exports = class Engine {
 
           // overall profit/loss
           'overall profit/loss %': [ [ this.asset, this.currency ].join('/'), [
-            fp((this.assetBalanceConsolidatedDiff + this.currencyBalanceConsolidatedDiff)/2)
+            fp((this.assetBalanceConsolidatedDiff + this.currencyBalanceConsolidatedDiff) / 2)
           ].join('/')].join(' '),
-
 
           // Order stats
           'orders size/buy/sell': [
@@ -451,9 +450,9 @@ module.exports = class Engine {
       this.market = config.get('market')
 
       // Get the poll settings
-      this.pollInfo = config.get('pollInfo')      // How often do poll for price and balance changes
-      this.pollOrders = config.get('pollOrders')  // How often do poll for order changes
-      this.pollReport = config.get('pollReport')  // How often do poll for report changes
+      this.pollInfo = config.get('pollInfo') // How often do poll for price and balance changes
+      this.pollOrders = config.get('pollOrders') // How often do poll for order changes
+      this.pollReport = config.get('pollReport') // How often do poll for report changes
 
       // Get order settings
       this.adjustSpread = config.get('adjustSpread')
@@ -464,7 +463,7 @@ module.exports = class Engine {
       this.orderCountSell = config.get('orderCountSell')
       this.orderCountSellMin = config.get('orderCountSellMin')
       this.orderSize = config.get('orderSize')
-      this.orderSizeAuto = config.get('orderSize') == 0
+      this.orderSizeAuto = config.get('orderSize') === 0
       this.orderSizeMultiplier = config.get('orderSizeMultiplier') / 100
 
       // Do we save the report?
