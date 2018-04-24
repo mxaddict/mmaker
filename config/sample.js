@@ -13,9 +13,9 @@ let conf = {
   minWidthPercent: 0.5,
   minWidthPercentIncrement: 0.3,
   orderCountBuy: 4,
-  orderCountBuyMin: 3,
+  orderCountBuyMin: 2,
   orderCountSell: 4,
-  orderCountSellMin: 3,
+  orderCountSellMin: 2,
   orderSize: 0, // ZERO = AUTO USES orderSizeMultiplier * accountBalance
   orderSizeMultiplier: 2.5,
   positionTarget: 1,
