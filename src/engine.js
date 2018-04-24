@@ -429,7 +429,7 @@ module.exports = class Engine {
   }
 
   adjustOrderSize (price) {
-    if (this.orderSize === 0) {
+    if (this.orderSizeAuto) {
       // Calculate the orderSize
       this.orderSize = this.currencyBalanceConsolidated * this.orderSizeMultiplier / this.fair
     }
@@ -466,6 +466,7 @@ module.exports = class Engine {
       this.orderCountSell = config.get('orderCountSell')
       this.orderCountSellMin = config.get('orderCountSellMin')
       this.orderSize = config.get('orderSize')
+      this.orderSizeAuto = config.get('orderSize') == 0
       this.orderSizeMultiplier = config.get('orderSizeMultiplier') / 100
 
       // Do we save the report?
