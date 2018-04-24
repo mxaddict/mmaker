@@ -380,14 +380,6 @@ module.exports = class Engine {
         }
 
         log(table([{
-          // Market flow
-          'price bid/ask/fair/spread %': [ this.currency, [
-            fk(this.bid).green,
-            fk(this.ask).red,
-            fk(this.fair).cyan,
-            fp(this.spreadPercent)
-          ].join('/')].join(' '),
-
           // asset balance
           'asset balance start/current': [ this.asset, [
             fk(this.assetBalanceConsolidatedStart).cyan,
@@ -411,6 +403,12 @@ module.exports = class Engine {
             fkl(this.currencyBalanceConsolidated - this.currencyBalanceConsolidatedStart),
             fp(this.currencyBalanceConsolidatedDiff)
           ].join('/')].join(' '),
+
+          // overall profit/loss
+          'overall profit/loss %': [ [ this.asset, this.currency ].join('/'), [
+            fp((this.assetBalanceConsolidatedDiff + this.currencyBalanceConsolidatedDiff)/2)
+          ].join('/')].join(' '),
+
 
           // Order stats
           'orders size/buy/sell': [
