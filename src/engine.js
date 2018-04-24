@@ -459,7 +459,6 @@ module.exports = class Engine {
 
       // Get order settings
       this.adjustSpread = config.get('adjustSpread')
-      this.greedy = config.get('greedy')
       this.minWidthPercent = config.get('minWidthPercent') / 100
       this.minWidthPercentIncrement = config.get('minWidthPercentIncrement') / 100
       this.orderCountBuy = config.get('orderCountBuy')
