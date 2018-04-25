@@ -10,14 +10,14 @@ let conf = {
 
   // Get order settings
   adjustSpread: true,
-  minWidthPercent: 0.5,
-  minWidthPercentIncrement: 0.3,
-  orderCountBuy: 4,
+  minWidthPercent: 0.6,
+  minWidthPercentIncrement: 0.4,
+  orderCountBuy: 3,
   orderCountBuyMin: 2,
-  orderCountSell: 4,
+  orderCountSell: 3,
   orderCountSellMin: 2,
   orderSize: 0, // ZERO = AUTO USES orderSizeMultiplier * accountBalance
-  orderSizeMultiplier: 2.5,
+  orderSizeMultiplier: 5,
   saveReport: true,
 
   binance: {
