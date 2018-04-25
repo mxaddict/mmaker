@@ -18,7 +18,6 @@ let conf = {
   orderCountSellMin: 2,
   orderSize: 0, // ZERO = AUTO USES orderSizeMultiplier * accountBalance
   orderSizeMultiplier: 2.5,
-  positionTarget: 1,
   saveReport: true,
 
   binance: {
