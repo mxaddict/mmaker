@@ -65,7 +65,6 @@ module.exports = class Engine {
     this.orderFair = false
 
     this.orders = []
-    this.ordersReset = false
     this.ordersBuy = []
     this.ordersSell = []
 
@@ -233,15 +232,12 @@ module.exports = class Engine {
 
         // Check if we need to update orders
         if (
-          this.ordersReset ||
+          this.orders.length &&
           (
-            this.orders.length &&
-            (
-              this.orders.length > (this.orderCountBuy + this.orderCountSell) ||
-              this.ordersBuy.length < this.orderCountBuyMin ||
-              this.ordersSell.length < this.orderCountSellMin
-            ) // Do we have a balanced order set?
-          )
+            this.orders.length > (this.orderCountBuy + this.orderCountSell) ||
+            this.ordersBuy.length < this.orderCountBuyMin ||
+            this.ordersSell.length < this.orderCountSellMin
+          ) // Do we have a balanced order set?
         ) {
           try {
             // Get the orderIds
@@ -252,8 +248,6 @@ module.exports = class Engine {
             for (let i = 0, len = orderIds.length; i < len; i++) {
               await this.exchange.cancelOrder(orderIds[i], this.market)
             }
-
-            this.ordersReset = false
           } catch (e) {
             /* handle error */
             log.bright.red.error(e)
@@ -301,6 +295,44 @@ module.exports = class Engine {
               type: 'limit',
               is_postonly: true
             })
+          }
+
+          // Calculate total currency needed for buy orders
+          let currencyNeeded = newOrdersBuy.reduce((currency, order) => {
+            return currency + parseFloat(order.amount) * parseFloat(order.price)
+          }, 0)
+
+          // Calculate total asset needed for sell orders
+          let assetNeeded = newOrdersBuy.reduce((asset, order) => {
+            return asset + parseFloat(order.amount)
+          }, 0)
+
+          // Check if we need to sell some assets
+          if (this.currencyBalance < currencyNeeded) {
+            // Calculate how much we need to sell
+            let assetToSell = (currencyNeeded - this.currencyBalance) / this.ask
+
+            // Check if we meet the minimum
+            if (assetToSell < this.marketInfo.limits.amount.min) {
+              assetToSell = this.marketInfo.limits.amount.min
+            }
+
+            // Run the order
+            await this.exchange.createOrder(this.market, 'market', 'sell', assetToSell * 1.01)
+          }
+
+          // Check if we need to buy some assets
+          if (this.assetBalance < assetNeeded) {
+            // Calculate how much we need to sell
+            let assetToBuy = (assetNeeded - this.assetBalance)
+
+            // Check if we meet the minimum
+            if (assetToBuy < this.marketInfo.limits.amount.min) {
+              assetToBuy = this.marketInfo.limits.amount.min
+            }
+
+            // Run the order
+            await this.exchange.createOrder(this.market, 'market', 'buy', assetToBuy * 1.01)
           }
 
           try {
