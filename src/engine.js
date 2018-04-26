@@ -67,8 +67,6 @@ module.exports = class Engine {
     this.ordersBuy = []
     this.ordersSell = []
 
-    this.aggressive = false
-
     this.assetBalance = false
     this.assetBalanceStart = false
     this.currencyBalance = false
