@@ -27,7 +27,7 @@ function fkl (value) {
   return _return
 }
 function fp (value) {
-  let format = '+00.00%'
+  let format = '+00.0000%'
   let _return = numbro(value).format(format)
     .replace(/0/g, '0'.darkGray)
 
@@ -62,16 +62,12 @@ module.exports = class Engine {
     this.currency = this.market.split('/')[1]
 
     this.started = false
-    this.orderFair = false
 
     this.orders = []
     this.ordersBuy = []
     this.ordersSell = []
 
-    this.profitOrder = false
-
-    // Max orders allowed by exchange
-    this.chunks = 10
+    this.aggressive = false
 
     this.assetBalance = false
     this.assetBalanceStart = false
@@ -196,6 +192,13 @@ module.exports = class Engine {
       // Save the balances
       this.assetBalance = balance[this.asset] ? balance[this.asset].total : 0
       this.currencyBalance = balance[this.currency] ? balance[this.currency].total : 0
+
+      // Check if we want aggressive profit calculation
+      if (this.aggressive) {
+        // Calculate the start balances at current prices
+        this.assetBalanceConsolidatedStart = this.assetBalanceStart ?  this.assetBalanceStart + (this.currencyBalanceStart / this.ask) : 0
+        this.currencyBalanceConsolidatedStart = this.currencyBalanceStart ? this.currencyBalanceStart + (this.assetBalanceStart * this.bid) : 0
+      }
 
       // Calculate consolidated balance
       this.assetBalanceConsolidated = this.assetBalance + (this.currencyBalance / this.ask)
@@ -350,9 +353,6 @@ module.exports = class Engine {
             /* handle error */
             log.bright.red.error(e)
           }
-
-          // Save the used fair
-          this.orderFair = this.fair
         }
       }
     } catch (e) {
@@ -485,6 +485,9 @@ module.exports = class Engine {
       this.pollInfo = config.get('pollInfo') // How often do poll for price and balance changes
       this.pollOrders = config.get('pollOrders') // How often do poll for order changes
       this.pollReport = config.get('pollReport') // How often do poll for report changes
+
+      // Do we need to aggressively calculate profit?
+      this.aggressive = config.get('aggressive')
 
       // Get order settings
       this.adjustSpread = config.get('adjustSpread')

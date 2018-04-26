@@ -19,6 +19,7 @@ let conf = {
   orderSize: 0, // ZERO = AUTO USES orderSizeMultiplier * accountBalance
   orderSizeMultiplier: 3, // 0 - 100 % possible values
   saveReport: true, // Saves a report file in ./public/report.json
+  aggressive: true, // Calculate the profit/loss aggressively?
 
   binance: {
     apiKey: '', // You know what this is?
