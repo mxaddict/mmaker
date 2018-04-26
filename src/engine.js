@@ -88,12 +88,6 @@ module.exports = class Engine {
   }
 
   async start () {
-    // Check for USD
-    if (['USD', 'USDT'].includes(this.currency)) {
-      log.bright.red.error(`CURRENCY ${this.currency} is NOT ALLOWED!`)
-      return false
-    }
-
     // Check exchange
     if (!ccxt.exchanges.includes(this.exchange)) {
       log.bright.red.error(`Exchange "${this.exchange}" is not supported YET`)
