@@ -17,7 +17,7 @@ let conf = {
   orderCountSell: 5,
   orderCountSellMin: 2,
   orderSize: 0, // ZERO = AUTO USES orderSizeMultiplier * accountBalance
-  orderSizeMultiplier: 2.5, // 0 - 100 % possible values
+  orderSizeMultiplier: 4, // 0 - 100 % possible values
   saveReport: true, // Saves a report file in ./public/report.json
 
   binance: {
