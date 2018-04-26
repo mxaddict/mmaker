@@ -10,11 +10,23 @@ const table = require('as-table').configure({ title: x => x.darkGray, delimiter:
 
 // Make some shorthands for numbro
 function fk (value) {
-  return numbro(value).format('0,0[.]00000000')
+  let format = '+0,0[.]00000000'
+
+  // Check if we need less decimals
+  if (value > 1) {
+    format = '+0,0[.]00'
+  }
+  return numbro(value).format(format)
     .replace(/0/g, '0'.darkGray)
 }
 function fkl (value) {
   let format = '+0,0[.]00000000'
+
+  // Check if we need less decimals
+  if (value > 1) {
+    format = '+0,0[.]00'
+  }
+
   let _return = numbro(value).format(format)
     .replace(/0/g, '0'.darkGray)
 
@@ -27,7 +39,7 @@ function fkl (value) {
   return _return
 }
 function fp (value) {
-  let format = '+00.0000%'
+  let format = '+00.00%'
   let _return = numbro(value).format(format)
     .replace(/0/g, '0'.darkGray)
 
@@ -410,6 +422,13 @@ module.exports = class Engine {
         }
 
         log(table([{
+          // Market flow
+          'price bid/ask/spread %': [ this.currency, [
+            fk(this.bid).green,
+            fk(this.ask).red,
+            fp(this.spreadPercent)
+          ].join('/')].join(' '),
+
           // asset balance
           'asset balance start/current': [ this.asset, [
             fk(this.assetBalanceConsolidatedStart).cyan,
@@ -423,19 +442,19 @@ module.exports = class Engine {
           ].join('/')].join(' '),
 
           // asset profit/loss
-          'asset profit/loss value/%': [ this.asset, [
+          'asset p/l value/%': [ this.asset, [
             fkl(this.assetBalanceConsolidated - this.assetBalanceConsolidatedStart),
             fp(this.assetBalanceConsolidatedDiff)
           ].join('/')].join(' '),
 
           // currency profit/loss
-          'currency profit/loss value/%': [ this.currency, [
+          'currency p/l value/%': [ this.currency, [
             fkl(this.currencyBalanceConsolidated - this.currencyBalanceConsolidatedStart),
             fp(this.currencyBalanceConsolidatedDiff)
           ].join('/')].join(' '),
 
           // overall profit/loss
-          'overall profit/loss %': [ [ this.asset, this.currency ].join('/'), [
+          'overall p/l %': [ [ this.asset, this.currency ].join('/'), [
             fp((this.assetBalanceConsolidatedDiff + this.currencyBalanceConsolidatedDiff) / 2)
           ].join('/')].join(' '),
 
