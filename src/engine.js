@@ -455,7 +455,7 @@ module.exports = class Engine {
 
           // overall profit/loss
           'overall p/l %': [ [ this.asset, this.currency ].join('/'), [
-            fp(this.assetBalanceConsolidatedDiff + this.currencyBalanceConsolidatedDiff)
+            fp((this.assetBalanceConsolidatedDiff + this.currencyBalanceConsolidatedDiff) / 2)
           ].join('/')].join(' '),
 
           // Order stats
