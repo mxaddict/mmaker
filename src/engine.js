@@ -194,7 +194,7 @@ module.exports = class Engine {
       // Check if we want aggressive profit calculation
       if (this.aggressive) {
         // Calculate the start balances at current prices
-        this.assetBalanceConsolidatedStart = this.assetBalanceStart ?  this.assetBalanceStart + (this.currencyBalanceStart / this.ask) : 0
+        this.assetBalanceConsolidatedStart = this.assetBalanceStart ? this.assetBalanceStart + (this.currencyBalanceStart / this.ask) : 0
         this.currencyBalanceConsolidatedStart = this.currencyBalanceStart ? this.currencyBalanceStart + (this.assetBalanceStart * this.bid) : 0
       }
 
