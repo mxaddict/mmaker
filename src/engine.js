@@ -343,20 +343,26 @@ module.exports = class Engine {
             await this.exchange.createOrder(this.market, 'market', 'buy', assetToBuy * 1.01)
           }
 
-          try {
-            let orders = []
-            if (this.currencyBalance / this.currencyBalanceConsolidated > 0.5) {
-              orders = newOrdersBuy.concat(newOrdersSell)
-            } else {
-              orders = newOrdersSell.concat(newOrdersBuy)
-            }
+          // Temp orders array
+          let orders = []
 
-            for (let i = 0, len = orders.length; i < len; i++) {
-              await this.exchange.createOrder(orders[i].symbol, orders[i].type, orders[i].side, orders[i].amount, orders[i].price)
+          // Loop our new orders
+          for (let i = 0, len = Math.ceil((newOrdersBuy.length + newOrdersSell.length) / 2); i < len; i++) {
+            if (typeof newOrdersBuy[i] !== 'undefined') {
+              orders.push(newOrdersBuy[i])
             }
-          } catch (e) {
-            /* handle error */
-            log.bright.red.error(e)
+            if (typeof newOrdersSell[i] !== 'undefined') {
+              orders.push(newOrdersSell[i])
+            }
+          }
+
+          for (let i = 0, len = orders.length; i < len; i++) {
+            try {
+              await this.exchange.createOrder(orders[i].symbol, orders[i].type, orders[i].side, orders[i].amount, orders[i].price)
+            } catch (e) {
+              /* handle error */
+              log.bright.red.error(e)
+            }
           }
         }
       }
