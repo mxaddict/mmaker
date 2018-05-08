@@ -242,6 +242,7 @@ module.exports = class Engine {
           this.orders.length &&
           (
             this.orders.length > (this.orderCountBuy + this.orderCountSell) ||
+            this.orders.length < this.orderCountMin ||
             this.ordersBuy.length < this.orderCountBuyMin ||
             this.ordersSell.length < this.orderCountSellMin
           ) // Do we have a balanced order set?
@@ -504,6 +505,7 @@ module.exports = class Engine {
       this.adjustSpread = config.get('adjustSpread')
       this.minWidthPercent = config.get('minWidthPercent') / 100
       this.minWidthPercentIncrement = config.get('minWidthPercentIncrement') / 100
+      this.orderCountMin = config.get('orderCountMin')
       this.orderCountBuy = config.get('orderCountBuy')
       this.orderCountBuyMin = config.get('orderCountBuyMin')
       this.orderCountSell = config.get('orderCountSell')
