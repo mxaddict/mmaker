@@ -4,9 +4,9 @@ let conf = {
   market: 'NAV/BTC',
 
   // Get the poll settings
-  pollInfo: 5000,
-  pollOrders: 5000,
-  pollReport: 5000,
+  pollInfo: 2500,
+  pollOrders: 2500,
+  pollReport: 2500,
 
   // Get order settings
   adjustSpread: true,
