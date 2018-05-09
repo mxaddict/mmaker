@@ -1,7 +1,7 @@
 // What is our config?
 let conf = {
   exchange: 'binance',
-  market: 'NAV/BTC',
+  market: 'ETH/BTC',
 
   // Get the poll settings
   pollInfo: 5000,
@@ -10,13 +10,13 @@ let conf = {
 
   // Get order settings
   adjustSpread: true,
-  minWidthPercent: 0.25,
+  minWidthPercent: 0.3,
   minWidthPercentIncrement: 0.1,
-  orderCountMin: 7,
+  orderCountMin: 9,
   orderCountBuy: 5,
-  orderCountBuyMin: 3,
+  orderCountBuyMin: 4,
   orderCountSell: 5,
-  orderCountSellMin: 3,
+  orderCountSellMin: 4,
   orderSize: 0, // ZERO = AUTO USES orderSizeMultiplier * accountBalance
   orderSizeMultiplier: 1, // 0 - 100 % possible values
   saveReport: true, // Saves a report file in ./public/report.json
