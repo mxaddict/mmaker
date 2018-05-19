@@ -62,11 +62,12 @@ TODO: We need to find the issues and report them
 Send your donations here:
 
 ```
-BTC:  15cnoKuvP99mXbHGKt6MCEQH5rb8GkyYvA
-BCH:  1JVnEfbcBq1omZ4sD56Fxgn7n8XCFzFfwk
-DASH: Xn6Pe1phnHvNuffa8cChfoGarypVDgjYYv
-ETH:  0xc48dBdB37a5359c69A01671D45B14fe4Fcf69086
-LTC:  LL6Ntjv6jja1gzyFatK5rKoiWgQJp5anH2
+BTC:  1K6pkKRRwrDaGUzyWoe15cqY9YTNyr7Ku6
+BCH:  1NAfUksRFcJ82s59rUEEsQn7MgavrgdX3L
+DASH: XrDV5n5nTHY3MVWqProESuvpmCPPMBF69q
+ETH:  0x1aAebc828Af1df144Ee902189112D0d422aBD404
+LTC:  Laq7Wfnerq2zbSRr4L2J2PR8d6CzkGREm7
+NAV:  NVb3mSb7vPsNTZtCvM31cLwRErcQxzv1X8
 ```
 
 NOTE: if you wanna donate other alts, let me know, I can arrange for an address `¯\_(ツ)_/¯`
