@@ -45,9 +45,7 @@ Once Running, the output should look like this
 
 ## Supported exchanges?
 
-Right now it will only work with `bitfinex` v1 API
-
-I plan on adding more exchange API support in the future once I have time
+Right now I have been only using the bot with `binance`, but in theory it will work with any exchange that is on this `CCXT` support list
 
 # I want to monitor the bot while i'm mobile, how?
 
