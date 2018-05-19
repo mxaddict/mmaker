@@ -43,6 +43,8 @@ Once Running, the output should look like this
 
 ![Sample BOT run](https://raw.githubusercontent.com/mxaddict/mmaker/master/img/output.png)
 
+Check out [Sample BOT Trades](https://raw.githubusercontent.com/mxaddict/mmaker/master/sample_trades.ods) for an idea of what you can do with this `BOT`
+
 ## Supported exchanges?
 
 Right now I have been only using the bot with `binance`, but in theory it will work with any exchange that is on this `CCXT` support list
