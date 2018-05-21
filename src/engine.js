@@ -487,9 +487,12 @@ module.exports = class Engine {
       this.orderSize = this.marketInfo.limits.amount.min
     }
 
-    // Check order cost
-    if (this.orderSize * price < this.marketInfo.limits.cost.min) {
-      this.orderSize = this.marketInfo.limits.cost.min / price * 1.1
+    // Check if we even have a COST limit
+    if (this.marketInfo.limits.cost) {
+      // Check order cost
+      if (this.orderSize * price < this.marketInfo.limits.cost.min) {
+        this.orderSize = this.marketInfo.limits.cost.min / price * 1.1
+      }
     }
   }
 
