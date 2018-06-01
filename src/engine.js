@@ -39,7 +39,7 @@ function fkl (value) {
   return _return
 }
 function fp (value) {
-  let format = '+00.00%'
+  let format = '+00.000%'
   let _return = numbro(value).format(format)
     .replace(/0/g, '0'.darkGray)
 
