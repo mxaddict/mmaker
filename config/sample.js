@@ -10,15 +10,15 @@ let conf = {
 
   // Get order settings
   adjustSpread: false,
-  minWidthPercent: 0.6,
-  minWidthPercentIncrement: 0.6,
+  minWidthPercent: 0.3,
+  minWidthPercentIncrement: 0.3,
   orderCountMin: 5,
   orderCountBuy: 3,
   orderCountBuyMin: 2,
   orderCountSell: 3,
   orderCountSellMin: 2,
   orderSize: 0, // ZERO = AUTO USES orderSizeMultiplier * accountBalance
-  orderSizeMultiplier: 5, // 0 - 100 % possible values
+  orderSizeMultiplier: 1, // 0 - 100 % possible values
   saveReport: true, // Saves a report file in ./public/report.json
   aggressive: true, // Calculate the profit/loss aggressively?
 
