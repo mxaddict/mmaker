@@ -1,5 +1,5 @@
 // What is our config?
-let conf = {
+const conf = {
   exchange: 'binance',
   market: 'NAV/BTC',
 
@@ -24,7 +24,7 @@ let conf = {
 
   binance: {
     apiKey: '', // You know what this is?
-    secret: ''  // If you don't please leave!
+    secret: '' // If you don't please leave!
   }
 }
 
