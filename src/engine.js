@@ -39,7 +39,7 @@ function fkl (value) {
   return _return
 }
 function fp (value) {
-  let format = '+00.000%'
+  const format = '+00.000%'
   let _return = numbro(value).format(format)
     .replace(/0/g, '0'.darkGray)
 
@@ -123,7 +123,7 @@ module.exports = class Engine {
   async tickInfo () {
     try {
       // Load the price info
-      let orderbook = await this.exchange.fetchOrderBook(this.market)
+      const orderbook = await this.exchange.fetchOrderBook(this.market)
       this.bid = orderbook.bids.length ? orderbook.bids[0][0] : false
       this.ask = orderbook.asks.length ? orderbook.asks[0][0] : false
       this.fair = (this.bid + this.ask) / 2
@@ -131,7 +131,7 @@ module.exports = class Engine {
       this.spreadPercent = this.spread / this.bid
 
       // Load the balances for market
-      let balance = await this.exchange.fetchBalance()
+      const balance = await this.exchange.fetchBalance()
 
       // Check if we have the start balance
       if (!this.started && this.bid) {
@@ -139,7 +139,7 @@ module.exports = class Engine {
         this.started = true
 
         // Where is our balance cache?
-        let balanceFile = 'balance.json'
+        const balanceFile = 'balance.json'
         let balanceCache = false
 
         try {
@@ -225,8 +225,8 @@ module.exports = class Engine {
 
         // Some values we need to track later
         let price = 0
-        let newOrdersBuy = []
-        let newOrdersSell = []
+        const newOrdersBuy = []
+        const newOrdersSell = []
 
         // Load current orders
         this.orders = await this.exchange.fetchOpenOrders(this.market)
@@ -249,7 +249,7 @@ module.exports = class Engine {
         ) {
           try {
             // Get the orderIds
-            let orderIds = this.orders.map((order) => {
+            const orderIds = this.orders.map((order) => {
               return order.id
             })
 
@@ -306,12 +306,12 @@ module.exports = class Engine {
           }
 
           // Calculate total currency needed for buy orders
-          let currencyNeeded = newOrdersBuy.reduce((currency, order) => {
+          const currencyNeeded = newOrdersBuy.reduce((currency, order) => {
             return currency + parseFloat(order.amount) * parseFloat(order.price)
           }, 0)
 
           // Calculate total asset needed for sell orders
-          let assetNeeded = newOrdersBuy.reduce((asset, order) => {
+          const assetNeeded = newOrdersBuy.reduce((asset, order) => {
             return asset + parseFloat(order.amount)
           }, 0)
 
@@ -344,7 +344,7 @@ module.exports = class Engine {
           }
 
           // Temp orders array
-          let orders = []
+          const orders = []
 
           // Loop our new orders
           for (let i = 0, len = Math.ceil((newOrdersBuy.length + newOrdersSell.length) / 2); i < len; i++) {
@@ -382,10 +382,10 @@ module.exports = class Engine {
         // Check if we want to save the report
         if (this.saveReport) {
           // Where do we save the report?
-          let reportFile = 'public/report.json'
+          const reportFile = 'public/report.json'
 
           try {
-            let balance = {}
+            const balance = {}
             balance[this.asset] = {
               total: this.assetBalanceConsolidatedStart,
               consolidated: this.assetBalanceConsolidated,
@@ -398,7 +398,7 @@ module.exports = class Engine {
               profit: this.currencyBalanceConsolidated - this.currencyBalanceConsolidatedStart
             }
 
-            let report = {
+            const report = {
               balance: balance,
 
               asset: this.asset,
@@ -424,38 +424,38 @@ module.exports = class Engine {
 
         log(table([{
           // Market flow
-          'price bid/ask/spread %': [ this.currency, [
+          'price bid/ask/spread %': [this.currency, [
             fk(this.bid).green,
             fk(this.ask).red,
             fp(this.spreadPercent)
           ].join('/')].join(' '),
 
           // asset balance
-          'asset balance start/current': [ this.asset, [
+          'asset balance start/current': [this.asset, [
             fk(this.assetBalanceConsolidatedStart).cyan,
             fk(this.assetBalanceConsolidated).magenta
           ].join('/')].join(' '),
 
           // currency balance
-          'currency start/current': [ this.currency, [
+          'currency start/current': [this.currency, [
             fk(this.currencyBalanceConsolidatedStart).cyan,
             fk(this.currencyBalanceConsolidated).magenta
           ].join('/')].join(' '),
 
           // asset profit/loss
-          'asset p/l value/%': [ this.asset, [
+          'asset p/l value/%': [this.asset, [
             fkl(this.assetBalanceConsolidated - this.assetBalanceConsolidatedStart),
             fp(this.assetBalanceConsolidatedDiff)
           ].join('/')].join(' '),
 
           // currency profit/loss
-          'currency p/l value/%': [ this.currency, [
+          'currency p/l value/%': [this.currency, [
             fkl(this.currencyBalanceConsolidated - this.currencyBalanceConsolidatedStart),
             fp(this.currencyBalanceConsolidatedDiff)
           ].join('/')].join(' '),
 
           // overall profit/loss
-          'overall p/l %': [ [ this.asset, this.currency ].join('/'), [
+          'overall p/l %': [[this.asset, this.currency].join('/'), [
             fp((this.assetBalanceConsolidatedDiff + this.currencyBalanceConsolidatedDiff) / 2)
           ].join('/')].join(' '),
 
