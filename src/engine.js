@@ -254,7 +254,7 @@ module.exports = class Engine {
             })
 
             for (let i = 0, len = orderIds.length; i < len; i++) {
-              this.exchange.cancelOrder(orderIds[i], this.market)
+              await this.exchange.cancelOrder(orderIds[i], this.market)
             }
           } catch (e) {
             /* handle error */
@@ -358,7 +358,7 @@ module.exports = class Engine {
 
           for (let i = 0, len = orders.length; i < len; i++) {
             try {
-              this.exchange.createOrder(orders[i].symbol, orders[i].type, orders[i].side, orders[i].amount, orders[i].price)
+              await this.exchange.createOrder(orders[i].symbol, orders[i].type, orders[i].side, orders[i].amount, orders[i].price)
             } catch (e) {
               /* handle error */
               log.bright.red.error(e)
