@@ -325,6 +325,11 @@ module.exports = class Engine {
               assetToSell = this.marketInfo.limits.amount.min
             }
 
+            // Check if we meet the minimum
+            if (assetToSell < this.orderSize.toString()) {
+              assetToSell = this.orderSize.toString()
+            }
+
             // Run the order
             await this.exchange.createOrder(this.market, 'market', 'sell', assetToSell * 1.01)
           }
@@ -337,6 +342,11 @@ module.exports = class Engine {
             // Check if we meet the minimum
             if (assetToBuy < this.marketInfo.limits.amount.min) {
               assetToBuy = this.marketInfo.limits.amount.min
+            }
+
+            // Check if we meet the minimum
+            if (assetToBuy < this.orderSize.toString()) {
+              assetToBuy = this.orderSize.toString()
             }
 
             // Run the order
